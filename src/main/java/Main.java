@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,11 +9,19 @@ public class Main {
     private JFrame jFrame;
     private JMenu jMenu,jMenu01;
     private JMenuBar jMenuBar;
+    private Object rowData[][];
+    String column[];
+    JTable table;
+    JScrollPane jScrollPane=new JScrollPane();
+  private JPanel jPanel;
     public Main(){
+        ListingManagement listingManagement;
         jFrame=new JFrame("超市销售管理系统");
         jFrame.setSize(1000,600);
-        jFrame.setVisible(true);
+        //jFrame.setLayout(null);
         jMenuBar=new JMenuBar();
+        jPanel= (JPanel) jFrame.getContentPane();
+        jPanel.setLayout(null);
         ImageIcon mainIma=new ImageIcon("main.png");
         JPanel jPanel= (JPanel) jFrame.getContentPane();//获得一个容器
         jPanel.setOpaque(false);//将内容面板设为透明
@@ -20,39 +29,37 @@ public class Main {
         jLabel.setBounds(0,0,1000,600);
         mainIma.setImage(mainIma.getImage().getScaledInstance(jLabel.getWidth(), jLabel.getHeight(), Image.SCALE_DEFAULT));//图片自适应标签大小
         jFrame.getLayeredPane().add(jLabel, Integer.valueOf(Integer.MIN_VALUE));//标签添加到层面板
+
+
         JMenuItem item01,item02,item03;
-
-
         jMenu=new JMenu("菜单");
+        //jMenu.setBounds(0,0,100,30);
+
         item01=new JMenuItem("商品信息管理");
         ImageIcon item01Pic=new ImageIcon("a.png");
         item01.setIcon(item01Pic);
-       /* item01.addActionListener(new ActionListener() {
+      item01.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                PreparedStatement pstmt;
-                ResultSet rs;
-                Connection conn=null;
-                String url="jdbc:oracle:thin:@43.136.119.185:1521:orcl";
-                String sql="SELECT * "+
-                        "from worker";
-                try {
-                    Class.forName("oracle.jdbc.driver.OracleDriver");
-                    conn= DriverManager.getConnection(url,"lyz","Grcl1234LyZ");
-                   pstmt=conn.prepareStatement(sql);
-                   rs= pstmt.executeQuery();
+                ListingManagement listingManagement=new ListingManagement();
+                rowData=listingManagement.getRowData();
+                column=listingManagement.getColumnName();
 
+                table=new JTable(rowData,column);
+                jScrollPane.setViewportView(table);
+                jScrollPane.setBounds(0, 31, 700, 370);
 
-                } catch (ClassNotFoundException | SQLException ex) {
-                    ex.printStackTrace();
-                }
+                table.setRowHeight(35);
+                jPanel.add(jScrollPane);
+
             }
-        });*/
+        });
 
 
         item02=new JMenuItem("商品入库管理");
         ImageIcon item02Pic=new ImageIcon("b.png");
         item02.setIcon(item02Pic);
+
         item03=new JMenuItem("商品出库管理");
         ImageIcon item03Pic=new ImageIcon("c.png");
         item03.setIcon(item03Pic);
@@ -61,14 +68,16 @@ public class Main {
         jMenu01=new JMenu("商品管理");
         ImageIcon item04Pic=new ImageIcon("d.png");
         jMenu01.setIcon(item04Pic);
-
-        jMenu.add(jMenu01);
-        jMenu01.add(item02);
-        jMenu01.add(item03);
         jMenuBar.add(jMenu);
         jMenu.add(item01);
-        jFrame.setJMenuBar(jMenuBar);
+        jMenu.add(jMenu01);
 
+        jMenu01.add(item03);
+        jMenu01.add(item02);
+        jMenuBar.setBounds(0,0,100,30);
+
+        jPanel.add (jMenuBar);
+        jFrame.setVisible(true);
 
 
 
