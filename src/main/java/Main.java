@@ -5,19 +5,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
 
-public class Main {
+public class Main extends JFrame{
     private JFrame jFrame;
     private JMenu jMenu,jMenu01;
     private JMenuBar jMenuBar;
     private Object rowData[][];
     String column[];
     JTable table;
+    //JButton delete = new JButton("删除");
+
     JScrollPane jScrollPane=new JScrollPane();
   private JPanel jPanel;
     public Main(){
         ListingManagement listingManagement;
         jFrame=new JFrame("超市销售管理系统");
         jFrame.setSize(1000,600);
+       // delete.setBounds(0,500,30,30);
         //jFrame.setLayout(null);
         jMenuBar=new JMenuBar();
         jPanel= (JPanel) jFrame.getContentPane();
@@ -47,22 +50,30 @@ public class Main {
 
                 table=new JTable(rowData,column);
                 jScrollPane.setViewportView(table);
-                jScrollPane.setBounds(0, 31, 700, 370);
-
+                jScrollPane.setBounds(150, 115, 700, 370);
                 table.setRowHeight(35);
                 jPanel.add(jScrollPane);
+                //jPanel.add(delete);
 
             }
         });
+
+
 
 
         item02=new JMenuItem("商品入库管理");
         ImageIcon item02Pic=new ImageIcon("b.png");
         item02.setIcon(item02Pic);
 
-        item03=new JMenuItem("商品出库管理");
+        item03=new JMenuItem("商品销售");
         ImageIcon item03Pic=new ImageIcon("c.png");
         item03.setIcon(item03Pic);
+        item03.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ProductSale();
+            }
+        });
 
 
         jMenu01=new JMenu("商品管理");

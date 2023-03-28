@@ -2,6 +2,9 @@ package Tables;
 
 public class Goods {
     private String goodName;
+    private  String category;
+    private int price;
+    private int count;
 
     public String getGoodName() {
         return goodName;
@@ -35,7 +38,13 @@ public class Goods {
         this.count = count;
     }
 
-    private  String category;
-    private int price;
-    private int count;
+    @Override
+    public String toString() {
+        return "Goods{" +
+                "goodName='" + goodName + '\'' +
+                ", category='" + category + '\'' +
+                ", price=" + price +
+                ", count=" + count +
+                '}';
+    }
 }
