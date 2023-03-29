@@ -1,7 +1,20 @@
 package Tables;
 
 public class Goods {
+    private int id;
     private String goodName;
+    private String category;
+    private float price;
+    private int count;
+    private String photoURL;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getGoodName() {
         return goodName;
@@ -19,11 +32,11 @@ public class Goods {
         this.category = category;
     }
 
-    public int getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 
@@ -35,7 +48,23 @@ public class Goods {
         this.count = count;
     }
 
-    private  String category;
-    private int price;
-    private int count;
+    public String getPhotoURL() {
+        return photoURL;
+    }
+
+    public void setPhotoURL(String photoURL) {
+        this.photoURL = photoURL;
+    }
+
+    @Override
+    public String toString() {
+        return "Goods{" +
+                "id=" + id +
+                ", goodName='" + goodName + '\'' +
+                ", category='" + category + '\'' +
+                ", price=" + price +
+                ", count=" + count +
+                ", photoURL='" + photoURL + '\'' +
+                '}';
+    }
 }
