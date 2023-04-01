@@ -19,7 +19,7 @@ public class Main extends JFrame{
     public Main(){
         ListingManagement listingManagement;
         jFrame=new JFrame("超市销售管理系统");
-        jFrame.setSize(1000,600);
+        jFrame.setSize(1600,1000);
        // delete.setBounds(0,500,30,30);
         //jFrame.setLayout(null);
         jMenuBar=new JMenuBar();
@@ -72,6 +72,8 @@ public class Main extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 new ProductSale();
+//                SalesManage salesManage = new SalesManage();
+//                salesManage.init(jFrame);
             }
         });
 

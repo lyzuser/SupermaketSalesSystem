@@ -92,55 +92,7 @@ public class ProductSale {
                     product01.setText(strMsg);
                     jPanel.add(product01);
 //                    jScrollPane.add(product01);
-                    pay.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            int price = 0;
-                            String name="";
-                            int n = 0; //保存元素个数的变量
-                            for(int i = 0; i < dataArray.length; i++)
-                           {
-                               if(dataArray[i]!=null)
-                               System.out.println(n++);
 
-                            }
-                           for(int k=0;k< dataArray.length;k++){
-                           for(int j=0;j< dataArray[0].length;j++){
-                                  System.out.println(dataArray[k][j]);                               }
-                          }
-                            for (int i = 0; i < 3; i++) {
-//
-
-
-                                name+=dataArray[i][0]+";";
-                                price +=  Integer.parseInt(dataArray[i][2]);
-                            }
-                            WXPay.unifiedOrder(name,price*100);
-
-            /*
-            显示二维码
-             */
-                            JFrame jFrame=new JFrame("结账页面");
-                            jFrame.setSize(300,330);
-
-                            JLabel pay=new JLabel();
-                            ImageIcon icon=new ImageIcon("pay.jpg");    icon.setImage(icon.getImage().getScaledInstance(300,300, Image.SCALE_DEFAULT));
-
-                            pay.setVerticalTextPosition(JLabel.TOP);
-                            pay.setBounds(0,0,300,300);
-
-                            String strMsg1 = name;
-                            String strMsg = "<html><body bgcolor='green' color='red'>" +strMsg1+ "<br>" +price+ "<body></html>";
-                            pay.setText(strMsg);
-                            pay.setIcon(icon);
-
-                            JPanel jPanel= (JPanel) jFrame.getContentPane();
-                            jPanel.setLayout(null);
-                            jPanel.add(pay);
-                            jFrame.setVisible(true);
-
-                        }
-                    });
                     product01.addMouseListener(new MouseAdapter() {
                         @Override
                         public void mouseClicked(MouseEvent e) {
@@ -175,6 +127,52 @@ public class ProductSale {
 
 
                 }
+                pay.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        int price = 0;
+                        String name="";
+                        int n = 0; //保存元素个数的变量
+                        ee:for(int i = 0; i < dataArray.length; i++)
+                        {
+                            if(dataArray[i][0]!=null){
+                                n++;}
+                            else{break ee;}
+                        }
+                        for(int k=0;k< dataArray.length;k++){
+                            for(int j=0;j< dataArray[0].length;j++){
+                                System.out.println(dataArray[k][j]); }
+                        }
+                        for (int i = 0; i < n; i++) {
+                            name+=dataArray[i][0]+";";
+                            price +=  Integer.parseInt(dataArray[i][2]);
+                        }
+                        WXPay.unifiedOrder(name,price*100);
+
+            /*
+            显示二维码
+             */
+                            JFrame jFrame=new JFrame("结账页面");
+                            jFrame.setSize(300,330);
+
+                            JLabel pay=new JLabel();
+                            ImageIcon icon=new ImageIcon("pay.jpg");    icon.setImage(icon.getImage().getScaledInstance(300,300, Image.SCALE_DEFAULT));
+
+                            pay.setVerticalTextPosition(JLabel.TOP);
+                            pay.setBounds(0,0,300,300);
+
+                            String strMsg1 = name;
+                            String strMsg = "<html><body bgcolor='green' color='red'>" +strMsg1+ "<br>" +price+ "<body></html>";
+                            pay.setText(strMsg);
+                            pay.setIcon(icon);
+
+                            JPanel jPanel= (JPanel) jFrame.getContentPane();
+                            jPanel.setLayout(null);
+                            jPanel.add(pay);
+                            jFrame.setVisible(true);
+
+                    }
+                });
             }
 
         } catch (ClassNotFoundException | SQLException e) {

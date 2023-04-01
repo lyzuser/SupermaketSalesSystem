@@ -1,8 +1,9 @@
 package Tables;
 
 public class Goods {
+
     private String goodName;
-    private  String category;
+    private String category;
     private int price;
     private int count;
 
