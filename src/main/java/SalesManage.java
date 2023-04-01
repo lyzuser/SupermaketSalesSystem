@@ -1,4 +1,6 @@
 import Tables.Goods;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import pay.WXPay;
 
 import javax.swing.*;
@@ -8,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -182,12 +185,16 @@ public class SalesManage extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 String name = "";
-
+                JSONArray objects = new JSONArray();
                 for (int i = 0; i <Data.size(); i++) {
                     name += Data.get(i).get(1) + " ";
+                    JSONObject object = new JSONObject();
+                    object.put("goods_id",Data.get(i).get(0));
+                    object.put("quantity",Data.get(i).get(4));
+                    objects.add(object);
                 }
-                System.out.println(name);
-                WXPay.unifiedOrder(name, totalprices * 100);
+                String detail = objects.toJSONString(objects);
+                String out_trade_no = WXPay.unifiedOrder(name, totalprices * 100, detail);
 
                 //显示二维码
 
@@ -208,6 +215,16 @@ public class SalesManage extends JFrame{
                 jPanel.setLayout(null);
                 jPanel.add(payView);
                 jFrame1.setVisible(true);
+
+                //判断关闭二维码
+                CloseWX closeWX = null;
+                try {
+                    closeWX = new CloseWX(out_trade_no, jFrame1);
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+                Thread thread = new Thread(closeWX);
+                thread.start();
             }
         });
 

@@ -134,7 +134,7 @@ public class WXPay {
     /*
     下单：生成二维码
      */
-    public static void unifiedOrder(String name , float prices) {
+    public static String unifiedOrder(String name , float prices, String detail) {
         Map<String, String> resultMap = new HashMap();
         String openid = "ouR0E1oP5UGTEBce8jZ_sChfH26g"; //个人微信id
         MyConfig config = null;
@@ -169,21 +169,27 @@ public class WXPay {
         data.put("mch_id", "1623889015");//商户id
         // 回调接口，必须是一个域名，不能使用IP
         // 腾讯会自动调用你（程序自己提供的接口）的接口，给你发送支付结果的数据，数据格式：xml格式
-        data.put("notify_url", "https://c41n927683.hsk.top/result");
+        data.put("notify_url", "https://j71m629347.goho.co/result");
         data.put("out_trade_no", out_trade_no);//交易号
         data.put("spbill_create_ip", spbill_create_ip);//下单的电脑IP地址
         data.put("trade_type", "NATIVE");//支付类型
         data.put("total_fee", String.valueOf(total_fee));
 //        data.put("openid", openid);  不绑定微信id，所有人都可以扫码
 //        data.put("attach","id,11111;price,18.00;amount,1;");
+        data.put("attach",detail);
+        System.out.println("订单详情"+ detail);
+
+               // <out_trade_no>T9GTSn7gDoSmyZwmIRsknZx5CDkqv8P7</out_trade_no>
 
         try {
             Map<String, String> rMap = wxpay.unifiedOrder(data);//下单
             System.out.println("统一下单接口返回: " + rMap);
             createQRCode(rMap);//生成二维码
+            return out_trade_no;
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return "";
     }
 
     public static void createQRCode(Map<String, String> map) throws Exception {

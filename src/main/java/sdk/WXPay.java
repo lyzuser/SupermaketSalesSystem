@@ -150,7 +150,7 @@ public class WXPay {
         String msgUUID = reqData.get("nonce_str");
         String reqBody = WXPayUtil.mapToXml(reqData);
         System.out.println("urlSuffix:" + urlSuffix);
-        System.out.println(reqBody);
+        System.out.println("请求体：" + reqBody);
 
         String resp = this.wxPayRequest.requestWithoutCert(urlSuffix, msgUUID, reqBody, connectTimeoutMs, readTimeoutMs, autoReport);
         return resp;
@@ -353,7 +353,8 @@ public class WXPay {
         }
         String respXml = this.requestWithoutCert(url, this.fillRequestData(reqData), connectTimeoutMs, readTimeoutMs);
         System.out.println("请求接口的XML格式数据："+respXml);
-        return this.processResponseXml(respXml);
+        Map<String,String> result=this.processResponseXml(respXml);
+        return result;
     }
 
 
